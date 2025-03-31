@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/PWA
+/EventApi/obj
+/.vs/PWAApi
+/bin/Debug/net8.0
+/obj
