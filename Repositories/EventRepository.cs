@@ -1,5 +1,5 @@
+using API.Models;
 using EventApi.Data;
-using EventApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class EventRepository : Repository<Event>, IEventRepository

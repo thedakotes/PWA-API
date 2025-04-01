@@ -1,4 +1,4 @@
-using EventApi.Models;
+using API.Models;
 
 public interface IEventRepository : IRepository<Event>
 {

@@ -1,9 +1,10 @@
 using EventApi.DataTransferObjects;
-using EventApi.Models;
 
 public interface IEventService
 {
-    Task<EventDTO>AddEventAsync(EventDTO newEvent);
+    Task<EventDTO> AddEventAsync(EventDTO newEvent);
+    Task DeleteEventAsync(int id);
     Task<IEnumerable<EventDTO>> GetAllEventsAsync();
     Task<EventDTO?> GetEventByIdAsync(int id);
+    Task UpdateEventAsync(EventDTO updatedEvent);
 }

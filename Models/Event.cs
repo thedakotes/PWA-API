@@ -1,4 +1,4 @@
-namespace EventApi.Models
+namespace API.Models
 {
     public class Event : BaseEntity
     {

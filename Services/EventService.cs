@@ -1,6 +1,6 @@
+using API.Models;
 using AutoMapper;
 using EventApi.DataTransferObjects;
-using EventApi.Models;
 
 public class EventService : IEventService
 {
@@ -39,7 +39,6 @@ public class EventService : IEventService
     {
         var entity = _mapper.Map<Event>(newEvent);
         await _eventRepository.AddAsync(entity);
-        await _eventRepository.SaveChangesAsync(); // Ensure changes are saved to the database
 
         return _mapper.Map<EventDTO>(entity);
     }
@@ -49,8 +48,18 @@ public class EventService : IEventService
         await _eventRepository.DeleteAsync(id);
     }
 
-    public async Task UpdateEventAsync(Event updatedEvent)
+    public async Task UpdateEventAsync(EventDTO updatedEvent)
     {
-        await _eventRepository.UpdateAsync(updatedEvent);
+        if (updatedEvent == null)
+        {
+            throw new ArgumentNullException(nameof(updatedEvent), "Updated event cannot be null.");
+        }
+
+        var existingEvent = await _eventRepository.GetByIdAsync(updatedEvent.Id);
+        if (existingEvent != null)
+        {
+            _mapper.Map(updatedEvent, existingEvent);
+            await _eventRepository.UpdateAsync(existingEvent);
+        }
     }
 }

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using EventApi.Models;
+using API.Models;
 
 namespace EventApi.Data
 {
