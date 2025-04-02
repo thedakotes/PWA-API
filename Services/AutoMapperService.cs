@@ -1,6 +1,6 @@
 using AutoMapper;
-using EventApi.DataTransferObjects;
 using API.Models;
+using API.DataTransferObjects;
 
 public class MappingProfile: Profile
 {

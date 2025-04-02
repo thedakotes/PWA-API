@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using EventApi.DataTransferObjects;
+using API.DataTransferObjects;
 
 namespace EventApi.Controllers;
 

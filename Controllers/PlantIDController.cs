@@ -1,18 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.DataTransferObjects;
+using API.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/controller")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PlantIDController : ControllerBase
     {
-        [HttpPost]
-        public async Task<IActionResult> Identify()
+        IPlantIDService _plantIDService;
+        public PlantIDController(IPlantIDService plantIDService)
         {
+            _plantIDService = plantIDService;
+        }
+
+        [HttpPost("Identify")]
+        public async Task<IActionResult> Identify([FromForm] PlantIDRequestDTO plantID)
+        {
+            if (plantID.File == null || plantID.File.Length == 0)
+            {
+                return BadRequest("No file uploaded");
+            }
+
             try
             {
-                // Placeholder for plant identification logic
-                return Ok("Plant identified successfully!");
+                var result = await _plantIDService.IdentifyPlantAsync(plantID.File);
+                return Ok(result);
             }
             catch(Exception ex) 
             {

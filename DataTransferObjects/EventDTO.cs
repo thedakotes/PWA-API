@@ -1,4 +1,4 @@
-namespace EventApi.DataTransferObjects; // This namespace is used to organize the EventDTO class, indicating that it belongs to the Data Transfer Objects layer of the application
+namespace API.DataTransferObjects; // This namespace is used to organize the EventDTO class, indicating that it belongs to the Data Transfer Objects layer of the application
 public class EventDTO
 {
     public int Id {get;set;}    

@@ -1,4 +1,4 @@
-using EventApi.DataTransferObjects;
+using API.DataTransferObjects;
 
 public interface IEventService
 {

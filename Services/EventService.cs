@@ -1,6 +1,6 @@
+using API.DataTransferObjects;
 using API.Models;
 using AutoMapper;
-using EventApi.DataTransferObjects;
 
 public class EventService : IEventService
 {

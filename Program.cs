@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using EventApi.Data;
+using API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configure the HTTP request pipeline.
+builder.Services.AddHttpClient();
 
 // Register AutoMapper (scanning all assemblies for profiles)
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -17,12 +19,38 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IEventService, EventService>();
 
+// Retrieve the API provider from configuration
+var plantIDAPIProvider = builder.Configuration["PlantIDProvider"];
+
+if (plantIDAPIProvider == "PlantNet")
+{
+    builder.Services.AddScoped<IPlantIDService, PlantNetService>();
+}
+else if (plantIDAPIProvider == "PlantID")
+{
+    builder.Services.AddHttpClient<IPlantIDService, PlantIDService>();
+}
+else
+{
+    throw new Exception("Invalid PlantIDProvider configuration. Must be 'PlantNet' or 'PlantID'.");
+}
+
+// Load user secrets
+builder.Configuration.AddUserSecrets<Program>();
+
 // Add controllers
 builder.Services.AddControllers();
 
 // Configure Swagger (if you're using it for API documentation)
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => 
+{
+    options.MapType<IFormFile>(() => new Microsoft.OpenApi.Models.OpenApiSchema
+    {
+        Type = "string",
+        Format = "binary"
+    });
+});
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddCors(options =>
@@ -35,9 +63,8 @@ builder.Services.AddCors(options =>
                   .AllowAnyMethod();
         });
 });
-var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+var app = builder.Build();
 
 // Enable Swagger (only for development or debugging)
 if (app.Environment.IsDevelopment())
