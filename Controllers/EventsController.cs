@@ -29,7 +29,7 @@ public class EventsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
 
@@ -65,7 +65,7 @@ public class EventsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"Internal server error: {ex.Message}"); // Handle exceptions
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
 
