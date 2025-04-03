@@ -14,8 +14,8 @@ namespace API.Controllers
             _plantIDService = plantIDService;
         }
 
-        [HttpPost("Identify")]
-        public async Task<IActionResult> Identify([FromForm] PlantIDRequestDTO plantID)
+        [HttpPost("Search")]
+        public async Task<IActionResult> Search([FromForm] PlantIDRequestDTO plantID)
         {
             if (plantID.File == null || plantID.File.Length == 0)
             {

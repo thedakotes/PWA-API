@@ -93,7 +93,7 @@ public class EventsController : ControllerBase
         }
     }
 
-    [HttpPut("Update/{id}")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] EventDTO updatedEvent)
     {
         if (updatedEvent == null || id != updatedEvent.Id)
@@ -113,7 +113,7 @@ public class EventsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, $"Internal servier error {ex.Message}");
+            return StatusCode(StatusCodes.Status500InternalServerError, $"Internal server error {ex.Message}");
         }
     }
 }
